@@ -1,17 +1,32 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TiendaVirtualPerez.Models;
 
 namespace TiendaVirtualPerez.Models
 {
-    public class Usuario
+    public class Producto
     {
         public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Correo { get; set; }
-        public string Rol { get; set; }
 
         [Required]
-        [RegularExpression(@"^3\d{9}$",
-            ErrorMessage = "El celular debe estar entre 3000000000 y 3999999999")]
-        public string celular { get; set; }
+        [StringLength(100)]
+        public string Nombre { get; set; }
+
+        [Range(0, 1000000)]
+        public double Precio { get; set; }
+
+        [Range(0, 100)]
+        public int Stock { get; set; }
+
+        public int CategoriaId { get; set; }
+        public Categoria Categoria { get; set; }
+
+        public double CalcularValorInventario()
+        {
+            return Precio * Stock;
+        }
+        public bool TieneStock()
+        {
+            return Stock > 0;
+        }
     }
 }
