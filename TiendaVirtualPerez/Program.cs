@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using TiendaVirtualPerez.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddDbContext<TiendaContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TiendaContextConnection")));
 
 var app = builder.Build();
 
