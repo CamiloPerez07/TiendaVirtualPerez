@@ -19,7 +19,7 @@
                 <td>@item.Nombre</td>
                 <td>@item.Precio</td>
                 <td>@item.Stock</td>
-                <td>@item.Categoria</td>
+                <td>@item.Categoria?.Nombre</td>
                 <td>
                     @if (item.TieneStock())
                     {
