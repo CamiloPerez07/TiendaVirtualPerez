@@ -2,10 +2,11 @@
 
 <h2>Lista de Usuarios</h2>
 
-<a class="btn btn-primary" href="/Usuario/Create">Nuevo Usuario</a>
 
-<table class="table">
-    <thead>
+<a class="btn btn-success" href="/Usuario/Create"> Nuevo Usuario </a>
+<br><br>
+<table class="table table-stripes table-bordered">
+    <thead class="table-dark">
         <tr>
             <th>Nombre</th>
             <th>Correo</th>
@@ -25,9 +26,9 @@
                 <td>@item.celular</td>
 
                 <td>
-                    <a href="/Usuario/Edit/@item.Id">Editar</a>
+                    <a class="btn btn-warning btn-sm" href="/Usuario/Edit/@item.Id">Editar</a>
 
-                    <a href="/Usuario/Delete/@item.Id">Eliminar</a>
+                    <a class="btn btn-danger btn-sm" href="/Usuario/Delete/@item.Id">Eliminar</a>
                 </td>
             </tr>
         }
