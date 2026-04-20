@@ -26,6 +26,10 @@ namespace TiendaVirtualPerez.Controllers
         }
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("Usuario") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
@@ -40,6 +44,10 @@ namespace TiendaVirtualPerez.Controllers
         }
         public IActionResult Edit(int id)
         {
+            if (HttpContext.Session.GetString("Usuario") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             var categoria = _context.Categorias.Find(id);
 
             return View(categoria);
@@ -55,6 +63,7 @@ namespace TiendaVirtualPerez.Controllers
         }
         public IActionResult Delete(int id)
         {
+            
             var categoria = _context.Categorias.Find(id);
 
             _context.Categorias.Remove(categoria);

@@ -7,10 +7,8 @@
 <table class="table table-stripes table-bordered">
     <thead class="table-dark">
         <tr>
-            <th>ID</th>
             <th>Nombre</th>
             <th>Descripcion</th>
-            <th>Estado</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -18,23 +16,12 @@
         @foreach (var categoria in Model)
         {
             <tr>
-                <td>@categoria.Id</td>
                 <td>@categoria.Nombre</td>
                 <td>@categoria.Descripcion</td>
                 <td>
-                    @if (!string.IsNullOrEmpty(categoria.Nombre))
-                    {
-                        <span class="text-success">Activa</span>
-                    }
-                    else
-                    {
-                        <span class="text-danger">Sin nombre</span>
-                    }
-                </td>
-                <td>
                     <a class="btn btn-warning btn-sm" href="/Categoria/Edit/@categoria.Id">Editar</a>
 
-                    <a class="btn btn-warning btn-sm" href="/Categoria/Delete/@categoria.Id">Eliminar</a>
+                    <a class="btn btn-danger btn-sm" href="/Categoria/Delete/@categoria.Id">Eliminar</a>
                 </td>
             </tr>
         }

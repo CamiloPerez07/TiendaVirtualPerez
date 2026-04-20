@@ -26,7 +26,7 @@ namespace TiendaVirtualJojoa.Controllers
                 HttpContext.Session.SetString("Usuario", usuario.Nombre);
                 HttpContext.Session.SetString("Rol", usuario.Rol);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "categoria");
             }
             ViewBag.Error = "Credenciales incorrectas";
             return View();

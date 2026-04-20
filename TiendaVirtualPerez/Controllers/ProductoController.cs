@@ -27,6 +27,10 @@ namespace TiendaVirtualPerez.Controllers
         }
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("Usuario") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             ViewBag.Categorias = _context.Categorias.ToList();
             return View();
         }
@@ -42,6 +46,10 @@ namespace TiendaVirtualPerez.Controllers
         }
         public IActionResult Edit(int id)
         {
+            if (HttpContext.Session.GetString("Usuario") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             var producto = _context.Productos.Find(id);
             ViewBag.Categorias = _context.Categorias.ToList();
 
