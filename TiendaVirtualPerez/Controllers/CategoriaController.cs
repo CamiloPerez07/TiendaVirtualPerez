@@ -1,19 +1,66 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TiendaVirtualPerez.Data;
 using TiendaVirtualPerez.Models;
 
 namespace TiendaVirtualPerez.Controllers
 {
     public class CategoriaController : Controller
     {
+        private readonly TiendaContext _context;
+
+        public CategoriaController(TiendaContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
-            var categorias = new List<Categoria>
+            if (HttpContext.Session.GetString("Usuario") == null)
             {
-                new Categoria { Id = 1, Nombre = "Electricos", Descripcion = "Electrodomesticos" },
-                new Categoria { Id = 2, Nombre = "Deportes", Descripcion = "Protecciones, Balones y mas" },
-                new Categoria { Id = 3, Nombre = "", Descripcion = "Sin nombre definido" },
-            };
-            return View(categorias);
+                return RedirectToAction("Index", "Login");
+            }
+            var categoria = _context.Categorias
+                .ToList();
+
+            return View(categoria);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+
+        public IActionResult Create(Categoria categoria)
+        {
+            _context.Categorias.Add(categoria);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        public IActionResult Edit(int id)
+        {
+            var categoria = _context.Categorias.Find(id);
+
+            return View(categoria);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Categoria categoria)
+        {
+            _context.Categorias.Update(categoria);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete(int id)
+        {
+            var categoria = _context.Categorias.Find(id);
+
+            _context.Categorias.Remove(categoria);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

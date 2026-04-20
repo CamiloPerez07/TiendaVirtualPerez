@@ -2,12 +2,16 @@
 
 <h2>Lista de Categorias</h2>
 
-<table class="table">
-    <thead>
+<a class="btn btn-success" href="/Categoria/Create">Nuevo Producto</a>
+<br><br>
+<table class="table table-stripes table-bordered">
+    <thead class="table-dark">
         <tr>
             <th>ID</th>
             <th>Nombre</th>
             <th>Descripcion</th>
+            <th>Estado</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -18,7 +22,7 @@
                 <td>@categoria.Nombre</td>
                 <td>@categoria.Descripcion</td>
                 <td>
-                    @if (categoria.Nombre != "")
+                    @if (!string.IsNullOrEmpty(categoria.Nombre))
                     {
                         <span class="text-success">Activa</span>
                     }
@@ -26,6 +30,11 @@
                     {
                         <span class="text-danger">Sin nombre</span>
                     }
+                </td>
+                <td>
+                    <a class="btn btn-warning btn-sm" href="/Categoria/Edit/@categoria.Id">Editar</a>
+
+                    <a class="btn btn-warning btn-sm" href="/Categoria/Delete/@categoria.Id">Eliminar</a>
                 </td>
             </tr>
         }
