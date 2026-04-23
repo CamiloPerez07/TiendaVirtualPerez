@@ -27,7 +27,10 @@
                 <td>
                     <a class="btn btn-warning btn-sm" href="/Producto/Edit/@item.Id">Editar</a>
 
-                    <a class="btn btn-warning btn-sm" href="/Producto/Delete/@item.Id">Eliminar</a>
+                    @if(Context.Session.GetString("Rol") == "Admin")
+                    {
+                        <a class="btn btn-danger btn-sm" href="/Producto/Delete/@item.Id">Eliminar</a>
+                    }
                 </td>
             </tr>
         }

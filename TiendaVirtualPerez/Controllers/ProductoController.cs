@@ -66,6 +66,12 @@ namespace TiendaVirtualPerez.Controllers
         }
         public IActionResult Delete(int id)
         {
+            var rol = HttpContext.Session.GetString("Rol");
+            if(rol != "Admin")
+            {
+                return RedirectToAction("Index");
+            }
+
             var producto = _context.Productos.Find(id);
 
             _context.Productos.Remove(producto);

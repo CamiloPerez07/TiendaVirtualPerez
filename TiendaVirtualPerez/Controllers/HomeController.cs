@@ -15,6 +15,10 @@ namespace TiendaVirtualPerez.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetString("Usuario") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
 
