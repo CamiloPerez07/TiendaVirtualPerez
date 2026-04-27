@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using TiendaVirtualPerez.Data;
 using TiendaVirtualPerez.Models;
+using TiendaVirtualPerez.Helpers;
 
 namespace TiendaVirtualPerez.Controllers
 {
@@ -37,6 +38,7 @@ namespace TiendaVirtualPerez.Controllers
 
         public IActionResult Create(Usuario usuario)
         {
+            usuario.Clave = HashHelper.ObtenerHash(usuario.Clave);
             _context.Usuarios.Add(usuario);
             _context.SaveChanges();
 
