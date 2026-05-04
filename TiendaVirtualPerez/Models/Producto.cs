@@ -24,9 +24,6 @@ namespace TiendaVirtualPerez.Models
         {
             return Precio * Stock;
         }
-        public bool TieneStock()
-        {
-            return Stock > 0;
-        }
+        public string ImagenUrl { get; set; }
     }
 }

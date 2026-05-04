@@ -36,14 +36,27 @@ namespace TiendaVirtualPerez.Controllers
         }
 
         [HttpPost]
-
-        public IActionResult Create(Producto producto)
+        public IActionResult Create(Producto producto, IFormFile imagen)
         {
+            if (imagen != null)
+            {
+                var ruta = Path.Combine(Directory.GetCurrentDirectory(),
+                    "wwwroot/img", imagen.FileName);
+
+                using (var stream = new FileStream(ruta, FileMode.Create))
+                {
+                    imagen.CopyTo(stream);
+                }
+
+                producto.ImagenUrl = "/img/" + imagen.FileName;
+            }
+
             _context.Productos.Add(producto);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
+
         public IActionResult Edit(int id)
         {
             if (HttpContext.Session.GetString("Usuario") == null)
@@ -57,11 +70,39 @@ namespace TiendaVirtualPerez.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Producto producto)
+        public IActionResult Edit(Producto producto, IFormFile imagen)
         {
-            _context.Productos.Update(producto);
-            _context.SaveChanges();
+            var productoBD = _context.Productos.Find(producto.Id);
+            if (productoBD == null)
+                return NotFound();
 
+            // Actualizar datos normales
+            productoBD.Nombre = producto.Nombre;
+            productoBD.Precio = producto.Precio;
+            productoBD.Stock = producto.Stock;
+            productoBD.CategoriaId = producto.CategoriaId;
+
+            // Si sube nueva imagen
+            if (imagen != null)
+            {
+                var carpeta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+
+                if (!Directory.Exists(carpeta))
+                {
+                    Directory.CreateDirectory(carpeta);
+                }
+
+                var ruta = Path.Combine(carpeta, imagen.FileName);
+
+                using (var stream = new FileStream(ruta, FileMode.Create))
+                {
+                    imagen.CopyTo(stream);
+                }
+
+                productoBD.ImagenUrl = "/img/" + imagen.FileName;
+            }
+
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)

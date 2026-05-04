@@ -4,35 +4,15 @@
 
 <a class="btn btn-success" href="/Producto/Create">Nuevo Producto</a>
 <br><br>
-<table class="table table-stripes table-bordered">
-    <thead class="table-dark">
-        <tr>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Categoría</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Nombre</td>
-                <td>@item.Precio</td>
-                <td>@item.Stock</td>
-                <td>@item.Categoria?.Nombre</td>
-
-                <td>
-                    @if (Context.Session.GetString("Rol") == "Presidente")
-                    {
-                        <a class="btn btn-warning btn-sm" href="/Producto/Edit/@item.Id">Editar</a>
-
-                        <a class="btn btn-danger btn-sm" href="/Producto/Delete/@item.Id">Eliminar</a>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@foreach (var producto in Model)
+{
+    <div class="card" style="width: 18rem;">
+    <img src="@producto.ImagenUrl" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">@producto.Nombre</h5>
+        <p class="card-text">Valor: @producto.Precio</p>
+        <a class="btn btn-warning btn-sm" href="/Producto/Edit/@producto.Id">Editar</a>
+        <a class="btn btn-danger btn-sm" href="/Producto/Delete/@producto.Id">Eliminar</a>
+    </div>
+        </div>
+}
