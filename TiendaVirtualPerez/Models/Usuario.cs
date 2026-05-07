@@ -10,9 +10,8 @@ namespace TiendaVirtualPerez.Models
         public string Correo { get; set; }
         public string Rol { get; set; }
 
-        [Required]
-        [RegularExpression(@"^3\d{9}$",
-            ErrorMessage = "El celular debe estar entre 3000000000 y 3999999999")]
+        [Required(ErrorMessage = "El teléfono es obligatorio")]
+        [RegularExpression(@"^3\d{9}$", ErrorMessage = "El teléfono debe iniciar por 3 y tener 10 dígitos")]
         public string celular { get; set; }
         public string Clave { get; set; }
     }
