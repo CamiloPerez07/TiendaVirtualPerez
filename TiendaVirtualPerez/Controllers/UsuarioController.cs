@@ -38,6 +38,10 @@ namespace TiendaVirtualPerez.Controllers
 
         public IActionResult Create(Usuario usuario)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(usuario);
+            }
             usuario.Clave = HashHelper.ObtenerHash(usuario.Clave);
             _context.Usuarios.Add(usuario);
             _context.SaveChanges();
@@ -57,6 +61,11 @@ namespace TiendaVirtualPerez.Controllers
         [HttpPost]
         public IActionResult Edit(Usuario usuario)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(usuario);
+            }
+            usuario.Clave = HashHelper.ObtenerHash(usuario.Clave);
             _context.Usuarios.Update(usuario);
             _context.SaveChanges();
 
