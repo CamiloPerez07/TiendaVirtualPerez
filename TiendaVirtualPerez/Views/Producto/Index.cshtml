@@ -2,6 +2,20 @@
 
 <div class="container mt-4">
 
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Mensaje"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
     <h2 class="mb-4 text-center">Productos</h2>
     <a class="btn btn-success mb-3" href="/Producto/Create">
         Nuevo Producto
@@ -18,8 +32,8 @@
                 <div class="card h-100 shadow">
 
                     <img src="@(string.IsNullOrEmpty(item.ImagenUrl) ? "/imagenes/default.png" : item.ImagenUrl)"
-                         class="card-img-top"
-                         style="height:200px; object-fit:cover;" />
+                         class="card-img-top justify-content-center align-items-center p-3"
+                         style="height:200px; object-fit:contain;" />
 
                     <div class="card-body">
                         <h5 class="card-title">@item.Nombre</h5>
@@ -39,18 +53,30 @@
                                class="btn btn-danger btn-sm">Eliminar</a>
                         }
                         <hr>
-                        <form asp-action="AgregarCarrito" method="post">
+                        @if(item.Stock > 0)
+                        {
+                            <form asp-action="AgregarCarrito" method="post">
 
-                            <input type="hidden" name="id" value="@item.Id" />
+                                <input type="hidden" name="id" value="@item.Id" />
 
-                            <input type="number" name="cantidad" value="1" min="1"
-                                   class="form-control mb-2" />
+                                <input type="number" name="cantidad" value="1" min="1"
+                                       max="@item.Stock" class="form-control mb-2" />
 
-                            <button class="btn btn-outline-success w-100">
-                                Agregar al carrito
-                            </button>
+                                <button class="btn btn-outline-success w-100">
+                                    Agregar al carrito
+                                </button>
 
-                        </form>
+                            </form>
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning text-center">
+                                Producto Agotado
+                            </div>
+                           <button class="btn btn-secondary w-100" disabled>
+                               Sin Stock
+                           </button>
+                        }
                     </div>
                 </div>
             </div>
